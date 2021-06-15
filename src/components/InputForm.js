@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function InputForm() {
+function InputForm({setCredentialsPage}) {
   const [state, setState] = useState({
     contract: "",
     address: ""
@@ -39,8 +39,15 @@ function InputForm() {
           />
         </div>
 
-        <button className="btn btn-secondary" type="submit">
-          Submit
+        <button 
+          className="btn btn-secondary" 
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            setCredentialsPage(false);
+          }}
+          >
+            Submit
         </button>
       </form>
     </div>
