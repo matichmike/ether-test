@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function InputForm({setCredentialsPage}) {
+function InputForm({setCredentialsPage, setUserCredentials, fetchTokens}) {
   const [state, setState] = useState({
     contract: "",
     address: ""
@@ -9,12 +9,23 @@ function InputForm({setCredentialsPage}) {
   const handleChange = (event) => {
     setState(prevState => ({
       ...prevState, [event.target.id]: event.target.value
-    }))
+    }));
+    setUserCredentials(prevState => ({
+      ...prevState, [event.target.id]: event.target.value
+    }));
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    fetchTokens();
+    setCredentialsPage(false);
   }
 
   return (
     <div className="card login-card col-12 col-lg-4 mt-2 hv-center">
-      <form>
+      <form onSubmit={(event) =>
+            handleSubmit(event)
+          }>
         <div className="form-group text-left">
           <label htmlFor="contractInput">Contract</label>
           <input 
@@ -42,10 +53,7 @@ function InputForm({setCredentialsPage}) {
         <button 
           className="btn btn-secondary" 
           type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            setCredentialsPage(false);
-          }}
+          
           >
             Submit
         </button>
